@@ -72,6 +72,7 @@
         <th>ID</th>
         <th>Name</th>
         <th>Age</th>
+        <th>Gender</th>
         <th>Action</th>
     </tr>
     </thead>
@@ -80,6 +81,7 @@
         <td th:text="${student.id}"></td>
         <td th:text="${student.name}"></td>
         <td th:text="${student.age}"></td>
+        <td th:text="${student.gender}"></td>
         <td class="delete-button">
             <!-- Form for deleting student -->
             <form th:action="@{'deleteStudent/' + ${student.id}}" method="post" id="deleteForm">

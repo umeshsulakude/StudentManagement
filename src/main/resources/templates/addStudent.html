@@ -60,12 +60,14 @@
 <form action="/student/addStudent" method="post" th:if="${not #strings.isEmpty(errorMessage)}">
     <p th:text="${errorMessage}"></p>
     <input type="text" id="name" name="name" placeholder="Enter student name" required>
+    <input type="text" id="gender" name="gender" placeholder="Enter student Gender" required>
     <input type="number" id="age" name="age" placeholder="Enter student age" required>
     <input type="submit" value="Add Student">
     <input type="button" value="Cancel" onclick="location.href='/student/';">
 </form>
 <form action="/student/addStudent" method="post" th:unless="${not #strings.isEmpty(errorMessage)}">
     <input type="text" id="name1" name="name" placeholder="Enter student name" required>
+    <input type="text" id="gender1" name="gender" placeholder="Enter student Gender" required>
     <input type="number" id="age1" name="age" placeholder="Enter student age" required>
     <input type="submit" value="Add Student">
     <input type="button" value="Cancel" onclick="location.href='/student/';">
