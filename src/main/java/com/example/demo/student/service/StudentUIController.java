@@ -11,6 +11,7 @@ import org.springframework.web.client.RestTemplate;
 import java.net.URI;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/student")
@@ -47,7 +48,7 @@ public class StudentUIController {
     public String addStudent(Student student, Model model) {
         RestTemplate restTemplate = new RestTemplate();
         Student[] students = restTemplate.getForObject(apiUrl + "/getAllStudents", Student[].class);
-        boolean studentExists = Arrays.stream(students)
+        boolean studentExists = Arrays.stream(Objects.requireNonNull(students))
                 .anyMatch(s -> s.getName().equals(student.getName()) && s.getAge() == student.getAge());
 
         if (studentExists) {
