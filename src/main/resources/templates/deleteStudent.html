@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Student List</title>
+    <!-- Bootstrap CSS link -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f7f7f7;
+        }
+        h1 {
+            text-align: center;
+            color: #3498db;
+            margin-bottom: 20px;
+        }
+        .checkbox-col {
+            width: 50px;
+        }
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        td {
+            padding: 8px;
+            text-align: left;
+        }
+        td.student-id {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<h1>Student List</h1>
+<form id="deleteForm" action="/student/deleteByIds" method="post" onsubmit="return validateCheckboxes()">
+    <div class="container">
+        <div class="row">
+            <div class="col checkbox-col">
+                <input type="checkbox" id="selectAll" onclick="selectAllCheckboxes()">
+                <input type="hidden" id="hasSelection" name="hasSelection" value="false">
+                <label for="selectAll">Select All</label>
+            </div>
+            <div class="col">
+                <!-- Empty column for better alignment -->
+            </div>
+        </div>
+    </div>
+    <table class="table table-striped">
+        <!-- Table headers -->
+        <thead>
+        <tr>
+            <th class="checkbox-col"></th>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Age</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="student : ${students}">
+            <td class="checkbox-col">
+                <input type="checkbox" name="studentIds" th:value="${student.id}" onclick="updateDeleteButton()">
+            </td>
+            <td class="student-id" th:text="${student.id}"></td>
+            <td th:text="${student.name}"></td>
+            <td th:text="${student.age}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <!-- Back and Delete Selected buttons -->
+    <div class="button-container">
+        <a href="/student/" class="btn btn-secondary back-button">Back</a>
+        <button type="button" class="btn btn-danger" onclick="deleteSelected()" id="deleteButton" disabled>Delete Selected</button>
+    </div>
+</form>
+<!-- Bootstrap and jQuery JS links -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    function selectAllCheckboxes() {
+        var checkboxes = document.getElementsByName('studentIds');
+        var selectAll = document.getElementById('selectAll');
+        for (var i = 0; i < checkboxes.length; i++) {
+            checkboxes[i].checked = selectAll.checked;
+        }
+        updateDeleteButton();
+    }
+
+    function deleteSelected() {
+        document.getElementById('deleteForm').submit();
+    }
+
+    function validateCheckboxes() {
+        var checkboxes = document.getElementsByName('studentIds');
+        var hasSelected = false;
+        for (var i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i].checked) {
+                hasSelected = true;
+                break;
+            }
+        }
+        document.getElementById('hasSelection').value = hasSelected;
+        return hasSelected;
+    }
+
+    function updateDeleteButton() {
+        var checkboxes = document.getElementsByName('studentIds');
+        var deleteButton = document.getElementById('deleteButton');
+        var hasChecked = false;
+        for (var i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i].checked) {
+                hasChecked = true;
+                break;
+            }
+        }
+        deleteButton.disabled = !hasChecked;
+    }
+</script>
+</body>
+</html>
