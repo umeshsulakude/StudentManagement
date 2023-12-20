@@ -31,23 +31,22 @@ public class StudentController {
 
     @PostMapping("/addStudents")
     public Student addStudent(@RequestBody Student student) {
- List<Student> s = getByName(student);
+        List<Student> s = getByName(student);
         if (s.isEmpty()) {
             return studentRepository.save(student);
         }
         return s.get(0);
         // Implement other CRUD operations (GET, PUT, DELETE) as needed
     }
+
     @PostMapping("/deletestudent")
-    public  boolean deleteStudent(@RequestBody Long id)
-    {
+    public boolean deleteStudent(@RequestBody Long id) {
         studentRepository.deleteById(id);
         return true;
     }
 
     @PostMapping("/deletestudents")
-    public  boolean deleteStudent(@RequestBody List<Long> Ids)
-    {
+    public boolean deleteStudent(@RequestBody List<Long> Ids) {
         studentRepository.deleteAllById(Ids);
         return true;
     }

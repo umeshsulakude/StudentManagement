@@ -13,8 +13,8 @@ import org.springframework.ui.Model;
 
 @SpringBootApplication
 public class DemoApplication {
-	public static void main(String[] args) {
-		System.out.println("Hi");
-		SpringApplication.run(DemoApplication.class, args);
-	}
+    public static void main(String[] args) {
+        System.out.println("Hi");
+        SpringApplication.run(DemoApplication.class, args);
+    }
 }

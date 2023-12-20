@@ -5,6 +5,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
+import java.util.Date;
 import java.util.Objects;
 
 @Entity
@@ -14,6 +15,7 @@ public class Student {
     private Long id;
     private String name;
     private int age;
+    private String gender;
 
     public Long getId() {
         return id;
@@ -39,17 +41,25 @@ public class Student {
         this.age = age;
     }
 
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Student student = (Student) o;
-        return age == student.age && Objects.equals(id, student.id) && Objects.equals(name, student.name);
+        return age == student.age && Objects.equals(id, student.id) && Objects.equals(name, student.name) && Objects.equals(gender, student.gender);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, age);
+        return Objects.hash(id, name, age, gender);
     }
 
     @Override
@@ -58,6 +68,7 @@ public class Student {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", age=" + age +
+                ", gender=" + gender +
                 '}';
     }
 }

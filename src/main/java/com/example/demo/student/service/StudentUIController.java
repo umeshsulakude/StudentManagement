@@ -11,6 +11,7 @@ import org.springframework.web.client.RestTemplate;
 import java.net.URI;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/student")
@@ -23,12 +24,14 @@ public class StudentUIController {
     public String getWelcomPage(Model model) {
         return "hello";
     }
+
     @GetMapping("/getstudents")
     public String getAllStudents(Model model) {
         RestTemplate restTemplate = new RestTemplate();
-        Student[] students = restTemplate.getForObject(apiUrl+"/getAllStudents", Student[].class);
+        Student[] students = restTemplate.getForObject(apiUrl + "/getAllStudents", Student[].class);
         List<Student> studentList = Arrays.asList(students);
-        model.addAttribute("students", studentList);;
+        model.addAttribute("students", studentList);
+        ;
         return "Student";
     }
 
@@ -47,7 +50,7 @@ public class StudentUIController {
     public String addStudent(Student student, Model model) {
         RestTemplate restTemplate = new RestTemplate();
         Student[] students = restTemplate.getForObject(apiUrl + "/getAllStudents", Student[].class);
-        boolean studentExists = Arrays.stream(students)
+        boolean studentExists = Arrays.stream(Objects.requireNonNull(students))
                 .anyMatch(s -> s.getName().equals(student.getName()) && s.getAge() == student.getAge());
 
         if (studentExists) {
@@ -62,8 +65,8 @@ public class StudentUIController {
     @PostMapping("/deleteStudent/{id}")
     public String deleteStudent(@PathVariable("id") Long id) {
         RestTemplate restTemplate = new RestTemplate();
-            URI uri = restTemplate.postForLocation(apiUrl + "/deletestudent",id);
-            return "redirect:/student/getstudents";
+        URI uri = restTemplate.postForLocation(apiUrl + "/deletestudent", id);
+        return "redirect:/student/getstudents";
     }
 
     @PostMapping("/deleteByIds")
@@ -71,7 +74,7 @@ public class StudentUIController {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        URI uri = restTemplate.postForLocation(apiUrl + "/deletestudents",Ids);
+        URI uri = restTemplate.postForLocation(apiUrl + "/deletestudents", Ids);
         return "redirect:/student/delete";
     }
 }
