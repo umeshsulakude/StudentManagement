@@ -22,7 +22,7 @@ public class StudentUIController {
 
     @GetMapping("/")
     public String getWelcomPage(Model model) {
-        return "hello";
+        return "helloStudent";
     }
 
     @GetMapping("/getstudents")
