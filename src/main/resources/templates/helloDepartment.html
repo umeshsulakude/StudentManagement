@@ -34,6 +34,23 @@
         button:hover {
             background-color: #2980b9;
         }
+
+        .home-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+            margin-right: 20px;
+        }
+
+        .home-button:hover {
+            background-color: #2980b9;
+        }
     </style>
 </head>
 <body>
@@ -42,6 +59,8 @@
 </div>
 
 <div class="button-container">
+    <a href="http://localhost:8080/" class="home-button">Home</a>
+
     <form action="/department/getdepartment" method="get">
         <button type="submit">Get Department</button>
     </form>
