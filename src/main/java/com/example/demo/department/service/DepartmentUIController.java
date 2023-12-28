@@ -1,8 +1,8 @@
 package com.example.demo.department.service;
 
 import com.example.demo.department.entity.Department;
-import com.example.demo.student.entity.Student;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -25,14 +25,11 @@ public class DepartmentUIController {
         return "helloDepartment";
     }
 
-    //    @GetMapping("/getdepartment")
-//    public String getDepartmentByName(@PathVariable String deptName) {
-//        String apiUrl = departmentApiUrl + "/byname/" + deptName;
-//        RestTemplate restTemplate = new RestTemplate();
-//        Department department = restTemplate.getForObject(apiUrl, Department.class);
-//        // Handle department object as needed
-//        return ""; // Return your view name
-//    }
+    @GetMapping("/delete")
+    public String deleteDepartment(Model model) {
+        getDepartments(model);
+        return "deleteDepartment";
+    }
 
     @GetMapping("/getdepartments")
     public String getDepartments(Model model) {
@@ -65,5 +62,19 @@ public class DepartmentUIController {
         }
     }
 
+    @PostMapping("/delete/{id}")
+    public String deleteDepartment(@PathVariable("id") Long id) {
+        RestTemplate restTemplate = new RestTemplate();
+        URI uri = restTemplate.postForLocation(departmentApiUrl + "/deletedepartment", id);
+        return "redirect:/department/getdepartments";
+    }
+    @PostMapping("/deleteByIds")
+    public String deleteDepartments(@RequestParam("departmentIds") List<Long> Ids) {
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        URI uri = restTemplate.postForLocation(departmentApiUrl + "/deletedepartments", Ids);
+        return "redirect:/department/delete";
+    }
 }
 

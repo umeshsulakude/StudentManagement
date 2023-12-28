@@ -43,5 +43,16 @@ public class DepartmentController {
         return new ResponseEntity<>(savedDepartment, HttpStatus.CREATED);
     }
 
+    @PostMapping("/deletedepartment")
+    public boolean deleteDepartment(@RequestBody Long id) {
+        departmentService.deleteById(id);
+        return true;
+    }
+
+    @PostMapping("/deletedepartments")
+    public boolean deleteDepartments(@RequestBody List<Long> Ids) {
+        departmentService.deleteAllById(Ids);
+        return true;
+    }
 }
 
