@@ -2,6 +2,7 @@ package com.example.demo.department.service;
 
 import com.example.demo.department.Dao.DepartmentDao;
 import com.example.demo.department.entity.Department;
+import com.example.demo.student.entity.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,12 @@ public class DepartmentController {
     private final DepartmentDao departmentService;
     public DepartmentController(DepartmentDao departmentService) {
         this.departmentService = departmentService;
+    }
+
+
+    @GetMapping("/getAllDepartments")
+    public List<Department> getAllDepartments() {
+        return departmentService.findAll();
     }
 
     // Get department by name

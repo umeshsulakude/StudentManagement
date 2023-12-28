@@ -31,8 +31,7 @@ public class StudentUIController {
         Student[] students = restTemplate.getForObject(apiUrl + "/getAllStudents", Student[].class);
         List<Student> studentList = Arrays.asList(students);
         model.addAttribute("students", studentList);
-        ;
-        return "Student";
+        return "student";
     }
 
     @GetMapping("/add")

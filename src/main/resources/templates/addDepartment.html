@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Department</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        input[type="text"],
+        input[type="submit"],
+        input[type="button"] {
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: 250px;
+        }
+
+        input[type="submit"] {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #2980b9;
+        }
+
+        input[type="button"] {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        input[type="button"]:hover {
+            background-color: #c0392b;
+        }
+    </style>
+</head>
+<body>
+<h1>Add Department</h1>
+<form action="/department/addDepartment" method="post" th:if="${not #strings.isEmpty(errorMessage)}">
+    <p th:text="${errorMessage}"></p>
+    <input type="text" id="deptName" name="deptName" placeholder="Enter department name" required>
+    <input type="submit" value="Add Department">
+    <input type="button" value="Cancel" onclick="location.href='/department/';">
+</form>
+<form action="/department/addDepartment" method="post" th:unless="${not #strings.isEmpty(errorMessage)}">
+    <input type="text" id="deptName" name="deptName" placeholder="Enter department name" required>
+    <input type="submit" value="Add Department">
+    <input type="button" value="Cancel" onclick="location.href='/department/';">
+</form>
+</body>
+</html>
