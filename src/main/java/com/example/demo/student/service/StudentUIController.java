@@ -1,6 +1,8 @@
 package com.example.demo.student.service;
 
+import com.example.demo.department.entity.Department;
 import com.example.demo.student.entity.Student;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -18,7 +20,10 @@ import java.util.Objects;
 public class StudentUIController {
 
     private final String apiUrl = "http://localhost:8080/students"; // Replace with your API URL
+    private final String dept_Api_Url = "http://localhost:8080/departments";
 
+    @Autowired
+    StudentController studentController;
 
     @GetMapping("/")
     public String getWelcomPage(Model model) {
@@ -36,6 +41,9 @@ public class StudentUIController {
 
     @GetMapping("/add")
     public String AddStudentPage(Model model) {
+        RestTemplate restTemplate = new RestTemplate();
+        Department[] departments = restTemplate.getForObject(dept_Api_Url + "/getAllDepartments", Department[].class);
+        model.addAttribute("departments", Arrays.asList(departments));
         return "addStudent";
     }
 
@@ -50,7 +58,7 @@ public class StudentUIController {
         RestTemplate restTemplate = new RestTemplate();
         Student[] students = restTemplate.getForObject(apiUrl + "/getAllStudents", Student[].class);
         boolean studentExists = Arrays.stream(Objects.requireNonNull(students))
-                .anyMatch(s -> s.getName().equals(student.getName()) && s.getAge() == student.getAge());
+                .anyMatch(s -> s.getName().equals(student.getName()) && s.getAge() == student.getAge() && s.getGender() == student.getGender());
 
         if (studentExists) {
             model.addAttribute("errorMessage", "Student already exists!"); // Add error message to model

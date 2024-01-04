@@ -52,33 +52,54 @@
         input[type="button"]:hover {
             background-color: #c0392b;
         }
+
+        /* Style for dropdown label */
+        label {
+            margin-bottom: 5px;
+        }
+
+        /* Style for dropdown */
+        select {
+            width: 254px; /* Adjust width to match input fields */
+        }
     </style>
 </head>
 <body>
 <h1>Add Student</h1>
-<!-- Add this snippet in your HTML form -->
+<!-- Form for when there's an error message -->
 <form action="/student/addStudent" method="post" th:if="${not #strings.isEmpty(errorMessage)}">
     <p th:text="${errorMessage}"></p>
     <input type="text" id="name" name="name" placeholder="Enter student name" required>
     <input type="text" id="gender" name="gender" placeholder="Enter student Gender" required>
     <input type="number" id="age" name="age" placeholder="Enter student age" required>
+
+    <!-- Dropdown for selecting a department -->
+    <label for="department">Select Department:</label>
+    <select id="department" name="department" required>
+        <option value="" selected disabled>Select department</option>
+        <option th:each="dept : ${departments}" th:value="${dept.id}" th:text="${dept.deptName}"></option>
+    </select>
+
     <input type="submit" value="Add Student">
     <input type="button" value="Cancel" onclick="location.href='/student/';">
 </form>
+
+<!-- Form for when there's no error message -->
 <form action="/student/addStudent" method="post" th:unless="${not #strings.isEmpty(errorMessage)}">
     <input type="text" id="name1" name="name" placeholder="Enter student name" required>
     <input type="text" id="gender1" name="gender" placeholder="Enter student Gender" required>
     <input type="number" id="age1" name="age" placeholder="Enter student age" required>
+
+    <!-- Dropdown for selecting a department -->
+    <label for="department">Department:</label>
+    <select id="department" name="department" required>
+        <option value="" selected disabled>Select Department</option>
+        <option th:each="dept : ${departments}" th:value="${dept.id}" th:text="${dept.deptName}"></option>
+    </select>
+
     <input type="submit" value="Add Student">
     <input type="button" value="Cancel" onclick="location.href='/student/';">
 </form>
 
-
-<!--<form action="/student/addStudent" method="post">-->
-<!--    <input type="text" id="name" name="name" placeholder="Enter student name" required>-->
-<!--    <input type="number" id="age" name="age" placeholder="Enter student age" required>-->
-<!--    <input type="submit" value="Add Student">-->
-<!--    <input type="button" value="Cancel" onclick="location.href='/student/';">-->
-<!--</form>-->
 </body>
 </html>
