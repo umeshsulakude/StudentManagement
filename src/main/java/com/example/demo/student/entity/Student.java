@@ -1,7 +1,9 @@
 package com.example.demo.student.entity;
 
 import com.example.demo.department.entity.Department;
-import jakarta.persistence.*;
+
+import javax.persistence.*;
+import java.util.Objects;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.util.Objects;
@@ -102,4 +104,6 @@ public class Student {
                 .append("department", department) // Assuming department is a field in Student entity
                 .toString();
     }
+
+
 }

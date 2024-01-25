@@ -1,17 +1,18 @@
-package com.example.demo.student.Dao;
+package com.example.demo.user.Dao;
 
 import com.example.demo.student.entity.Student;
+import com.example.demo.user.entity.UserLogin;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.Date;
 import java.util.List;
 
 @Repository
-public interface StudentDao extends JpaRepository<Student, Long>  {
-    @Query("SELECT s FROM Student s WHERE s.name = :name AND s.age = :age")
-    List<Student> getByName(@Param("name") String name, @Param("age") int age);
+public interface UserLoginDao extends JpaRepository<UserLogin, Integer> {
+
+    @Query("SELECT u FROM UserLogin u WHERE u.username = :username")
+    UserLogin getByName(@Param("username") String username);
 
 }
