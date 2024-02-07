@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <style>
+        /* Your styling styles here */
+        #departmentList {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+<h2>Login</h2>
+<form id="loginForm" action="/authenticate" method="post">
+    <div>
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+    </div>
+    <div>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+    </div>
+    <button type="submit">Login</button>
+</form>
+
+<script>
+    document.getElementById("loginForm").addEventListener("submit", function (event) {
+        event.preventDefault();
+        const formData = new FormData(event.target);
+
+        fetch("/authenticate", {
+            method: "POST",
+            body: JSON.stringify({
+                username: formData.get("username"),
+                password: formData.get("password"),
+            }),
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+            .then(response => response.json())
+            .then(data => {
+                const token = data.token;
+
+                // Log the received token
+                console.log("Received Token:", token);
+
+                // Store the token in local storage
+                localStorage.setItem("jwtToken", token);
+
+                // Redirect to /home with the Bearer token
+                redirectToHome(token);
+            })
+            .catch(error => {
+                console.error("Login failed:", error);
+            });
+    });
+
+    // Log the stored token when the page loads
+    document.addEventListener("DOMContentLoaded", function () {
+        const storedToken = localStorage.getItem("jwtToken");
+        console.log("Stored Token:", storedToken);
+
+        // If token is present, redirect to /home
+        if (storedToken) {
+            redirectToHome(storedToken);
+        }
+    });
+
+    function redirectToHome(token) {
+
+  const userLoginModel = new FormData();
+
+    // Redirect to /home with Authorization header
+    fetch("/home", {
+        method: "GET",
+    })
+        .then(response => {
+            // Handle the response as needed
+            console.log("Response from /home:", response);
+
+            // Update the URL and navigate to /home.html
+         window.location.href = "/home";
+        })
+        .catch(error => {
+            console.error("Failed to call /home:", error);
+        });
+}
+</script>
+
+</body>
+
+</html>

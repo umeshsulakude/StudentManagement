@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Login Page</title>
+    <style>
+        /* Your styling styles here */
+    </style>
+</head>
+
+<body>
+<h2>Login</h2>
+
+<!-- JavaScript to set the token value from localStorage -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Retrieve the token from localStorage
+        var token = localStorage.getItem('jwtToken');
+
+        // Set the token value in the hidden input field
+        document.getElementById('tokenInput').value = token;
+    });
+
+    // JavaScript function to submit the form with token and headers
+    function submitForm() {
+        // Retrieve the token from the hidden input field
+        var token = document.getElementById('tokenInput').value;
+
+        // Create a new XMLHttpRequest object
+        var xhr = new XMLHttpRequest();
+
+        // Set up the request method and URL
+        xhr.open('GET', '/department/', true);
+
+        // Set the authorization header with the token
+        xhr.setRequestHeader('Authorization', 'Bearer ' + token);
+
+        // Set up the event handler for when the request completes
+
+        // Send the request
+        xhr.send();
+    }
+</script>
+
+<!-- Form with hidden input fields for token -->
+<form id="departmentForm">
+    <!-- Hidden input field for token -->
+    <input type="hidden" id="tokenInput" />
+
+    <!-- Button to trigger form submission -->
+    <button type="button" onclick="submitForm()">Department</button>
+</form>
+
+<form action="/students/" method="get">
+    <button type="submit">Student</button>
+</form>
+
+</body>
+
+</html>

@@ -48,11 +48,8 @@ public class DemoUIController {
         return "WelcomePage";
     }
 
-    @PostMapping("/home")
-    public String getDashBoardPage(Model model, @RequestBody  UserLoginModel userLoginModel) throws ServletException, IOException {
-        LoginController.manaualDoFilter(userLoginModel.getToken());
-      //  SecurityContextHolder.getContext().setAuthentication(userLoginModel.getToken());
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    @GetMapping("/home")
+    public String getDashBoardPage() throws ServletException, IOException {
         return "home";
     }
 
